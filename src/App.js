@@ -1,8 +1,17 @@
-import { Flex, Input, Text, Box, Button, Img } from '@chakra-ui/react'
+import {
+  Flex,
+  Input,
+  Text,
+  Box,
+  Button,
+  Img,
+  FormControl,
+} from '@chakra-ui/react'
 import cardMobile from './images/cards-mobile.png'
-import cardDesktop from './images/bg-card-front.png'
+import cardDesktop from './images/cards-desktop.png'
 
 import bgMobile from './images/bg-main-mobile.png'
+import bgDesktop from './images/bg-main-desktop.png'
 import { useState } from 'react'
 
 function App() {
@@ -24,35 +33,72 @@ function App() {
     })
   }
 
+  console.log(formData.cardholderName)
+
+  function submitForm() {
+    if (formData.cvc.length > 3) {
+      alert('wrong')
+    }
+  }
+
   return (
     <Flex
-      direction={{ base: 'column', xl: 'row' }}
+      direction={{ base: 'column', '2xl': 'row' }}
       height='100vh'
       width='100vw'
       justify='space-between'
       className='App'
     >
       <Box
+        display={{ base: 'block', '2xl': 'none' }}
         backgroundImage={bgMobile}
         backgroundSize={'cover'}
         zIndex={-1}
         flexGrow={1}
       ></Box>
+
+      <Box
+        display={{ base: 'none', '2xl': 'block' }}
+        backgroundImage={bgDesktop}
+        backgroundSize={'cover'}
+        zIndex={-1}
+        flexGrow={1}
+      ></Box>
+
       <Img
-        src={{ base: cardMobile }}
+        src={cardDesktop}
         width='100%'
+        maxW='600px'
+        pos='absolute'
+        display={{ base: 'none', '2xl': 'block' }}
+        left={'15%'}
+        right={'auto'}
+        top={'240px'}
+        margin='0 auto'
+      />
+      <Img
+        src={cardMobile}
+        width='90%'
         maxW='500px'
         pos='absolute'
-        left={{ base: 0, xl: '7.5%' }}
-        right={{ base: 0, xl: 'auto' }}
-        top={{ base: 'auto', xl: '300px' }}
+        display={{ base: 'block', '2xl': 'none' }}
+        left={{ base: 0 }}
+        right={{ base: 0 }}
+        top={{ base: '20px' }}
         margin='0 auto'
       />
 
       {/* mobile : l 0 / r 0 */}
 
       <Flex direction='column' justify='center' align='center' flexGrow={1}>
-        <Flex p={12} direction='column' fontSize='xs' width='90%' maxW='500px'>
+        <FormControl
+          onSubmit={submitForm}
+          p={12}
+          direction='column'
+          fontSize='xs'
+          width='90%'
+          maxW='500px'
+        >
           {/* row 1 : cardholder name */}
 
           <Text fontWeight='bold' textTransform='uppercase' mb={3}>
@@ -130,10 +176,10 @@ function App() {
               />
             </Box>
           </Flex>
-          <Button size='lg' background='#21092f' color='pink.50'>
+          <Button width='100%' size='lg' background='#21092f' color='pink.50'>
             Confirm
           </Button>
-        </Flex>
+        </FormControl>
       </Flex>
     </Flex>
   )
